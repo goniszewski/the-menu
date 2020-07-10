@@ -13,7 +13,7 @@
     "react-scripts": "3.4.1"
   },
   "scripts": {
-    "build:css":"tailwind build src/tailwind.css -o src/style.css",
+    "build:css": "tailwind build src/tailwind.css -o src/style.css",
     "start": "npm run build:css && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -35,6 +35,7 @@
     ]
   },
   "devDependencies": {
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "tailwindcss": "^1.4.6"
   }
 }
