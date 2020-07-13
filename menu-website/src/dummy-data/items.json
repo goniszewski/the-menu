@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "category": [1],
+    "name": "Margherita",
+    "price": 18,
+    "description": null,
+    "ingredients": [1, 2],
+    "allergens": null,
+    "spiceLevel": 0,
+    "isUndercooked": false,
+    "vegetarian": true,
+    "vegan": false,
+    "comesWith": []
+  },
+  {
+    "id": 2,
+    "category": [1],
+    "name": "Fungi",
+    "price": 20,
+    "description": null,
+    "ingredients": [1, 2, 3],
+    "allergens": null,
+    "spiceLevel": 0,
+    "isUndercooked": false,
+    "vegetarian": true,
+    "vegan": false,
+    "comesWith": []
+  },
+  {
+    "id": 3,
+    "category": [1],
+    "name": "Prosciutto e fungi",
+    "price": 20,
+    "description": null,
+    "ingredients": [1, 2, 3, 4],
+    "allergens": null,
+    "spiceLevel": 0,
+    "isUndercooked": false,
+    "vegetarian": false,
+    "vegan": false,
+    "comesWith": []
+  }
+]

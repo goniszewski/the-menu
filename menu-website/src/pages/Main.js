@@ -1,5 +1,8 @@
 import React from "react";
-import { ReactComponent as leafIcon } from "../assets/icons/leaf.svg";
+import categories from "../dummy-data/categories.json";
+import items from "../dummy-data/items.json";
+import ingredients from "../dummy-data/ingredients.json";
+import { ReactComponent as LeafIcon } from "../assets/icons/leaf.svg";
 
 class Main extends React.Component {
   render() {
@@ -24,31 +27,86 @@ class Main extends React.Component {
         </header>
         <main className="container mx-auto px-6 sm:px-10">
           {/* section starts */}
-          <div className="">
-            <div className="flex justify-center">
-              <span className="flex-initial font-serif text-2xl pb-8">
-                Pizza
-              </span>
-            </div>
-            <div className="flex flex-row h-auto">
-              <span className="flex-initial text-gray-700">1.</span>
-              {/* name & description starts */}
-              <div className="flex flex-col flex-grow pl-1">
-                <div className="flex-row">
-                  <span className="flex-initial mr-3">Margherita</span>
-                  {/* Not displaying yet. Why? */}
-                  <leafIcon className="h-10 w-10" />
+          {categories.map((category) => {
+            return (
+              <div className="">
+                <div className="flex justify-center">
+                  <span className="flex-initial font-serif text-2xl pb-8">
+                    {category.name}
+                  </span>
                 </div>
-                <span className="flex initial font-light italic">
-                  sos pomidorowy, mozzarella
-                </span>
+
+                {items.map((item) => {
+                  let i = 0;
+                  if (item.category.includes(category.id)) {
+                    return (
+                      <>
+                        <div
+                          key={item.id + item.name}
+                          className="flex flex-row h-auto"
+                        >
+                          <span className="flex-initial text-gray-700">
+                            {i + 1}.
+                          </span>
+                          {/* name & description starts */}
+                          <div className="flex flex-col flex-grow pl-1">
+                            <div className="flex flex-row items-center">
+                              <span className="flex-initial mr-2">
+                                {item.name}
+                              </span>
+                              <div>
+                                {item.vegetarian ? (
+                                  <LeafIcon
+                                    title="vegetarian"
+                                    className="flex-initial content-end fill-current text-green-700 h-4 w-4"
+                                    role={"img"}
+                                  />
+                                ) : (
+                                  ""
+                                )}
+                                {item.vegan ? (
+                                  <LeafIcon
+                                    title="vegan"
+                                    className="flex-initial content-end fill-current text-green-700 h-4 w-4"
+                                  />
+                                ) : (
+                                  ""
+                                )}
+                              </div>
+                            </div>
+                            <span className="flex initial font-light italic">
+                              {item.ingredients.map((itemIngredient) => {
+                                ingredients.map((ingredient) => {
+                                  if (ingredient.id === itemIngredient) {
+                                    console.log(ingredient.name);
+                                    return (
+                                      <>
+                                        <span
+                                          key={ingredient.id + ingredient.name}
+                                        >
+                                          {ingredient.name}
+                                        </span>
+                                      </>
+                                    );
+                                  } else {
+                                    return <span>nada</span>;
+                                  }
+                                });
+                              })}
+                            </span>
+                          </div>
+                          {/* name & description ends */}
+                          <span className="justify-end text-right font-light text-lg">
+                            {item.price},-
+                          </span>
+                        </div>
+                      </>
+                    );
+                  }
+                })}
               </div>
-              {/* name & description ends */}
-              <span className="justify-end text-right font-light text-lg">
-                18,-
-              </span>
-            </div>
-          </div>
+            );
+          })}
           {/* section ends */}
         </main>
         <footer></footer>

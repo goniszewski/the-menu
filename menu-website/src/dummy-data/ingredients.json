@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "sos pomidorowy",
+    "price": null,
+    "description": null
+  },
+  {
+    "id": 2,
+    "name": "mozzarella",
+    "price": null,
+    "description": null
+  },
+  {
+    "id": 3,
+    "name": "pieczarki",
+    "price": null,
+    "description": null
+  },
+  {
+    "id": 4,
+    "name": "szynka gotowana",
+    "price": null,
+    "description": null
+  }
+]
