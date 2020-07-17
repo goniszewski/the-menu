@@ -8,11 +8,11 @@ function App() {
     <Router>
       <div className="App">
         <Switch>
-          <Route path exact="/">
-            <Main />
-          </Route>
           <Route path="/editor">
             <Editor />
+          </Route>
+          <Route path="/">
+            <Main />
           </Route>
         </Switch>
       </div>

@@ -1,11 +1,16 @@
 import React from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getCategories } from "../components/GetMenuData";
-import MenuItem from "../components/MenuItems";
 import { ReactComponent as CircleWithPlusIcon } from "../assets/icons/circle-with-plus.svg";
 import MenuItems from "../components/MenuItems";
 
 class MenuEditor extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { selectedCategory: getCategories()[0] };
+  }
+  componentDidMount() {}
+
   render() {
     return (
       <div className="container">
@@ -13,39 +18,37 @@ class MenuEditor extends React.Component {
           <header className="flex-row m-4">
             <span className="text-xl text-gray-900">Editor</span>
           </header>
-          <ul class="flex border-b px-2 overflow-x-auto overflow-y-hidden scrolling-touch">
-            <li class="-mb-px mr-1">
-              <a
-                class="bg-white inline-block border-l border-t border-r rounded-t py-2 px-4 text-orange-500 font-semibold "
-                href="#"
-              >
-                Pizza
-              </a>
-            </li>
-
+          <ul className="flex border-b px-2 overflow-x-auto overflow-y-hidden scrolling-touch">
             {getCategories().map((category) => {
               return (
-                <li class="mr-1">
-                  <a
-                    class="bg-white inline-block py-2 px-4 text-orange-400 hover:text-orange-500 font-semibold"
-                    href="#"
+                <li key={category.id} className="mr-1">
+                  <button
+                    key={`${category}-button`}
+                    className={`outline-none bg-white inline-block py-2 px-4 select-none  ${
+                      category === this.state.selectedCategory
+                        ? `text-orange-500 border-l border-t border-r rounded-t`
+                        : `text-orange-400 hover:text-orange-500`
+                    }  font-semibold`}
+                    onClick={() => {
+                      this.setState({ selectedCategory: category });
+                    }}
                   >
                     {category.name}
-                  </a>
+                  </button>
                 </li>
               );
             })}
-            <li class="mr-1">
+            <li className="mr-1">
               <a
-                class="bg-white inline-block py-2 px-4 text-gray-400 font-semibold"
+                className="bg-white inline-block py-2 px-4 text-gray-400 font-semibold"
                 href="#"
               >
                 inactive
               </a>
             </li>
-            <li class="mr-1">
+            <li className="mr-1">
               <a
-                class="mx-auto pt-1 bg-white inline-block py-0 px-0 text-orange-400 hover:text-orange-500 font-semibold"
+                className="mx-auto pt-1 bg-white inline-block py-0 px-0 text-orange-400 hover:text-orange-500 font-semibold"
                 href="#"
               >
                 <CircleWithPlusIcon className="w-8 h-8 fill-current" />
@@ -53,7 +56,10 @@ class MenuEditor extends React.Component {
             </li>
           </ul>
           <main>
-            <MenuItems />
+            <MenuItems
+              key={`${this.state.selectedCategory.id}-items`}
+              selectedCategory={this.state.selectedCategory}
+            />
           </main>
         </div>
       </div>

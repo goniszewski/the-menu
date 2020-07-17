@@ -35,17 +35,16 @@ class Main extends React.Component {
       <div className="min-h-full min-w-full bg-orange-200 md:pb-16 md:pt-10">
         <div className="container flex flex-col min-h-screen mx-auto bg-yellow-100 text-gray-900 shadow-xl max-w-3xl">
           <div
-            className={`rounded-full h-12 w-12 mr-2 mb-16 bg-orange-300 opacity-75 fixed right-0 bottom-0 shadow-md sm:mr-6 md:mr-16 ${
+            className={`rounded-full h-12 w-12 mr-2 mb-16 bg-orange-400 opacity-75 fixed right-0 bottom-0 shadow-md sm:mr-6 md:mr-16 ${
               this.state.showBackToTopButton ? "" : "hidden"
             }`}
           >
-            <a onClick={() => window.scrollTo(0, 0)}>
-              {/* TODO: fade-in after ~100px, styling */}
+            <button onClick={() => window.scrollTo(0, 0)}>
               <ChevronUpIcon
                 title="Back to top"
-                className="fill-current text-yellow-100 opacity-100"
+                className="fill-current text-white opacity-100 h-12 w-12"
               />
-            </a>
+            </button>
           </div>
           <header>
             <div className="md:hidden">

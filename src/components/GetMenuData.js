@@ -1,4 +1,3 @@
-import React from "react";
 import categories from "../dummy-data/categories.json";
 import items from "../dummy-data/items.json";
 import ingredients from "../dummy-data/ingredients.json";
