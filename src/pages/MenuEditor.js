@@ -1,5 +1,4 @@
 import React from "react";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { getCategories } from "../components/GetMenuData";
 import { ReactComponent as CircleWithPlusIcon } from "../assets/icons/circle-with-plus.svg";
 import MenuItems from "../components/MenuItems";

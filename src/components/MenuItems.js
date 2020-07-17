@@ -1,12 +1,42 @@
 import React, { Component } from "react";
 import { getItems, getIngredients } from "../components/GetMenuData";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ReactComponent as SquaredCrossIcon } from "../assets/icons/squared-cross.svg";
 import { ReactComponent as EditIcon } from "../assets/icons/edit.svg";
+
+const reorder = (list, startIndex, endIndex) => {
+  const result = Array.from(list);
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+  console.log(result);
+
+  return result;
+};
+
+const grid = 8;
+
+const getItemStyle = (isDragging, draggableStyle) => ({
+  // some basic styles to make the items look a bit nicer
+  userSelect: "none",
+  padding: 0,
+  margin: 0,
+
+  // change background colour if dragging
+  // background: isDragging ? "lightgreen" : "grey",
+
+  // styles we need to apply on draggables
+  ...draggableStyle,
+});
+
+const getListStyle = (isDraggingOver) => ({
+  background: isDraggingOver ? "lightblue" : "lightgrey",
+});
 
 export default class MenuItems extends Component {
   constructor(props) {
     super(props);
     this.state = { items: [] };
+    this.onDragEnd = this.onDragEnd.bind(this);
   }
 
   componentDidMount() {
@@ -20,30 +50,85 @@ export default class MenuItems extends Component {
     });
     this.setState({ items: itemsCopy });
   }
+
+  onDragEnd(result) {
+    // dropped outside the list
+    if (!result.destination) {
+      console.log("No drag destination");
+      return;
+    }
+    console.log(result);
+    console.log(this.state.items);
+
+    const thisItems = reorder(
+      this.state.items,
+      result.source.index,
+      result.destination.index
+    );
+
+    this.setState({
+      items: thisItems,
+    });
+  }
   render() {
     if (!this.props.selectedCategory) {
       return <div className="block align-middle">Add a category first</div>;
     } else {
       return (
-        <div className=" w-full">
-          {this.state.items.map((item) => {
-            return (
-              <div key={`${item.id}`} className=" max-w-3xl mx-5">
-                <div className="block mx-auto appearance-none bg-white  max-w-sm leading-relaxed border border-gray-400 h-10 hover:border-gray-500 pl-4 pr-1 py-1 mx-4 my-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
-                  <span className="align-middle">{item.name}</span>
-                  <span className=" inline-flex float-right">
-                    <button>
-                      <EditIcon className="fill-current text-white self-center bg-orange-400 rounded hover:bg-orange-500 h-6 w-6 p-1 mr-2" />
-                    </button>
-                    <button>
-                      <SquaredCrossIcon className="fill-current text-red-400 self-center hover:text-red-500 h-8 w-8" />
-                    </button>
-                  </span>
-                </div>
+        <DragDropContext onDragEnd={this.onDragEnd}>
+          <Droppable droppableId="droppable">
+            {(provided, snapshot) => (
+              <div
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+                className=" w-full"
+                // style={getListStyle(snapshot.isDraggingOver)}
+              >
+                {this.state.items.map((item, index) => {
+                  return (
+                    <Draggable
+                      key={`${item.id}`}
+                      draggableId={`${item.id}`}
+                      index={index}
+                    >
+                      {(provided, snapshot) => (
+                        <div
+                          key={`${item.id}`}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className=" max-w-3xl mx-5"
+                          // style={getItemStyle(
+                          //   snapshot.isDragging,
+                          //   provided.draggableProps.style
+                          // )}
+                        >
+                          <div className="block mx-auto appearance-none bg-white  max-w-sm leading-relaxed border border-gray-400 h-10 hover:border-gray-500 pl-4 pr-1 py-1 mx-4 my-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
+                            <span className="align-middle">
+                              <span className=" text-gray-700">
+                                {index + 1}.
+                              </span>{" "}
+                              {item.name}
+                            </span>
+                            <span className=" inline-flex float-right">
+                              <button>
+                                <EditIcon className="fill-current text-white self-center bg-orange-400 rounded hover:bg-orange-500 h-6 w-6 p-1 mr-2" />
+                              </button>
+                              <button>
+                                <SquaredCrossIcon className="fill-current text-red-400 self-center hover:text-red-500 h-8 w-8" />
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  );
+                })}
+                {provided.placeholder}
               </div>
-            );
-          })}
-        </div>
+            )}
+          </Droppable>
+        </DragDropContext>
       );
     }
   }
