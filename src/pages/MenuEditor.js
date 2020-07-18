@@ -12,7 +12,7 @@ class MenuEditor extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="container z-0">
         <div className="flex flex-col">
           <header className="flex-row m-4">
             <span className="text-xl text-gray-900">Editor</span>
