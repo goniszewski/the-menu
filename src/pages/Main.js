@@ -63,7 +63,10 @@ class Main extends React.Component {
                 <div className="inline-flex flex-wrap max-w-sm content-end ">
                   {getCategories().map((category) => {
                     return (
-                      <span className="border-b-2 border-dashed border-grey-400 mx-2 uppercase tracking-wider">
+                      <span
+                        key={category.name}
+                        className="border-b-2 border-dashed border-grey-400 mx-2 uppercase tracking-wider"
+                      >
                         <a href={`#${category.name}`}>{category.name}</a>
                       </span>
                     );
@@ -91,115 +94,113 @@ class Main extends React.Component {
                     if (item.category.includes(category.id)) {
                       let ingredientsArray = [];
                       return (
-                        <>
-                          <div
-                            key={item.id + item.name}
-                            className="flex flex-row h-auto"
-                          >
-                            <span className="flex-initial text-gray-700">
-                              {(i += 1)}.
-                            </span>
-                            {/* name & description starts */}
-                            <div className="flex flex-col flex-grow pl-1 mb-2">
-                              <div className="flex flex-row items-center">
-                                <span className="flex-initial mr-2 text-gray-900 font-semibold">
-                                  {item.name}
-                                </span>
-                                <div className="flex flex-row">
-                                  {item.vegetarian ? (
-                                    <LeafIcon
-                                      title="vegetarian"
-                                      className="flex-initial content-end fill-current text-green-600 h-4 w-4"
-                                      role={"img"}
-                                    />
-                                  ) : (
-                                    ""
-                                  )}
-                                  {item.vegan ? (
-                                    <LeafIcon
-                                      title="vegan"
-                                      className="flex-initial content-end fill-current text-green-600 h-4 w-4"
-                                      role={"img"}
-                                    />
-                                  ) : (
-                                    ""
-                                  )}
-                                  {item.spiceLevel === 3 ? (
-                                    <>
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-600 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-600 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-600 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                    </>
-                                  ) : item.spiceLevel === 2 ? (
-                                    <>
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-600 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-600 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-300 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                    </>
-                                  ) : item.spiceLevel === 1 ? (
-                                    <>
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-600 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-300 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                      <SpicyIcon
-                                        title="spicy"
-                                        className="flex-initial content-end fill-current text-red-300 h-4 w-4"
-                                        role={"img"}
-                                      />
-                                    </>
-                                  ) : (
-                                    ""
-                                  )}
-                                </div>
-                              </div>
-                              <span className="flex initial font-light italic leading-tight">
-                                {item.ingredients.map((itemIngredient) => {
-                                  getIngredients().map((ingredient) => {
-                                    if (ingredient.id === itemIngredient) {
-                                      ingredientsArray.push(ingredient.name);
-                                    }
-                                  });
-                                })}
-                                {ingredientsArray.join(", ")}
+                        <div
+                          key={item.id + item.name}
+                          className="flex flex-row h-auto"
+                        >
+                          <span className="flex-initial text-gray-700">
+                            {(i += 1)}.
+                          </span>
+                          {/* name & description starts */}
+                          <div className="flex flex-col flex-grow pl-1 mb-2">
+                            <div className="flex flex-row items-center">
+                              <span className="flex-initial mr-2 text-gray-900 font-semibold">
+                                {item.name}
                               </span>
+                              <div className="flex flex-row">
+                                {item.vegetarian ? (
+                                  <LeafIcon
+                                    title="vegetarian"
+                                    className="flex-initial content-end fill-current text-green-600 h-4 w-4"
+                                    role={"img"}
+                                  />
+                                ) : (
+                                  ""
+                                )}
+                                {item.vegan ? (
+                                  <LeafIcon
+                                    title="vegan"
+                                    className="flex-initial content-end fill-current text-green-600 h-4 w-4"
+                                    role={"img"}
+                                  />
+                                ) : (
+                                  ""
+                                )}
+                                {item.spiceLevel === 3 ? (
+                                  <>
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-600 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-600 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-600 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                  </>
+                                ) : item.spiceLevel === 2 ? (
+                                  <>
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-600 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-600 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-300 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                  </>
+                                ) : item.spiceLevel === 1 ? (
+                                  <>
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-600 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-300 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                    <SpicyIcon
+                                      title="spicy"
+                                      className="flex-initial content-end fill-current text-red-300 h-4 w-4"
+                                      role={"img"}
+                                    />
+                                  </>
+                                ) : (
+                                  ""
+                                )}
+                              </div>
                             </div>
-                            {/* name & description ends */}
-                            <span className="justify-end text-right font-semibold text-grey-900 text-md ml-5">
-                              {item.price},-
+                            <span className="flex initial font-light italic leading-tight">
+                              {item.ingredients.map((itemIngredient) => {
+                                getIngredients().map((ingredient) => {
+                                  if (ingredient.id === itemIngredient) {
+                                    ingredientsArray.push(ingredient.name);
+                                  }
+                                });
+                              })}
+                              {ingredientsArray.join(", ")}
                             </span>
                           </div>
-                        </>
+                          {/* name & description ends */}
+                          <span className="justify-end text-right font-semibold text-grey-900 text-md ml-5">
+                            {item.price},-
+                          </span>
+                        </div>
                       );
                     }
                   })}
