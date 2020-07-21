@@ -97,13 +97,19 @@ export default class MenuItems extends Component {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className=" max-w-3xl mx-5"
+                          className={`max-w-3xl mx-5`}
                           // style={getItemStyle(
                           //   snapshot.isDragging,
                           //   provided.draggableProps.style
                           // )}
                         >
-                          <div className="block mx-auto appearance-none bg-white  max-w-sm leading-relaxed border border-gray-400 h-10 hover:border-gray-500 pl-4 pr-1 py-1 mx-4 my-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline z-0">
+                          <div
+                            className={`block mx-auto appearance-none bg-white  max-w-sm leading-relaxed border border-gray-400 h-10 hover:border-gray-500 pl-4 pr-1 py-1 mx-4 my-2 rounded shadow leading-tight focus:outline-none focus:shadow-outline z-0 ${
+                              snapshot.isDragging
+                                ? "bg-orange-200 shadow-lg"
+                                : ""
+                            }`}
+                          >
                             <span className="align-middle">
                               <span className=" text-gray-700">
                                 {index + 1}.
@@ -111,7 +117,7 @@ export default class MenuItems extends Component {
                               {item.name}
                             </span>
                             <span className=" inline-flex float-right">
-                              <EditItem />
+                              <EditItem item={item} />
                               <button
                                 onClick={() =>
                                   console.info(
