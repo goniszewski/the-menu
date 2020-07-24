@@ -3,6 +3,7 @@ import { getItems, getIngredients } from "../components/GetMenuData";
 import EditItem from "./EditItem";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ReactComponent as SquaredCrossIcon } from "../assets/icons/squared-cross.svg";
+import { ReactComponent as CircleWithPlusIcon } from "../assets/icons/circle-with-plus.svg";
 
 const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
@@ -35,7 +36,7 @@ const getListStyle = (isDraggingOver) => ({
 export default class MenuItems extends Component {
   constructor(props) {
     super(props);
-    this.state = { items: [] };
+    this.state = { items: [], showNewItemModal: false };
     this.onDragEnd = this.onDragEnd.bind(this);
   }
 
@@ -70,6 +71,12 @@ export default class MenuItems extends Component {
       items: thisItems,
     });
   }
+
+  hideNewItemModal = () => {
+    this.setState({ showNewItemModal: false });
+    console.log("hided");
+  };
+
   render() {
     if (!this.props.selectedCategory) {
       return <div className="block align-middle">Add a category first</div>;
@@ -112,8 +119,8 @@ export default class MenuItems extends Component {
                           >
                             <span className="align-middle">
                               <span className=" text-gray-700">
-                                {index + 1}.
-                              </span>{" "}
+                                {index + 1}.{" "}
+                              </span>
                               {item.name}
                             </span>
                             <span className=" inline-flex float-right">
@@ -138,6 +145,23 @@ export default class MenuItems extends Component {
               </div>
             )}
           </Droppable>
+          <div className="flex justify-center">
+            <div
+              className={`flex-row rounded-full h-12 w-12 mb-10 bg-orange-400 opacity-75 fixed bottom-0 shadow-md`}
+            >
+              <button onClick={() => this.setState({ showNewItemModal: true })}>
+                <CircleWithPlusIcon
+                  title="Add new item"
+                  className="fill-current text-white opacity-100 h-12 w-12"
+                />
+              </button>
+            </div>
+            {this.state.showNewItemModal ? (
+              <EditItem newItem hideNewItemModal={this.hideNewItemModal} />
+            ) : (
+              <></>
+            )}
+          </div>
         </DragDropContext>
       );
     }
