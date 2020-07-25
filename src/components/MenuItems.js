@@ -45,7 +45,6 @@ export default class MenuItems extends Component {
     getItems().map((item) => {
       if (item.category.includes(this.props.selectedCategory.id)) {
         console.log(item);
-        console.log(this.state.items);
         itemsCopy = [...itemsCopy, item];
       }
     });
@@ -118,12 +117,16 @@ export default class MenuItems extends Component {
                             }`}
                           >
                             <span className="align-middle">
-                              <span className=" text-gray-700">
+                              <span className="text-gray-700">
                                 {index + 1}.{" "}
                               </span>
                               {item.name}
+                              <span className="text-gray-500 text-sm ml-2 truncate">
+                                {item.price} zł
+                              </span>
                             </span>
-                            <span className=" inline-flex float-right">
+
+                            <span className="inline-flex float-right">
                               <EditItem item={item} />
                               <button
                                 onClick={() =>

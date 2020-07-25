@@ -9,12 +9,18 @@ import {
 class Edititem extends Component {
   constructor(props) {
     super(props);
-    this.state = { isModalVisible: false };
+    this.state = { isModalVisible: false, item: {} };
+
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
     if (this.props.newItem) {
       this.setState({ isModalVisible: true });
+    }
+    if (this.props.item) {
+      this.setState({ item: this.props.item });
     }
   }
 
@@ -23,8 +29,57 @@ class Edititem extends Component {
       this.props.hideNewItemModal();
     }
   }
+
+  handleChange(event) {
+    const target = event.target;
+    const value = target.value;
+    const id = target.id;
+    const selectedOptions = target.selectedOptions;
+    let options = [];
+    let thisValue;
+
+    const isValueAllNum = /^\d+$/.test(value);
+
+    if (selectedOptions) {
+      options = Array.from(target.selectedOptions, (option) =>
+        parseInt(option.value)
+      );
+    }
+
+    // function isOptionsAllNum() {
+    //   let array = [];
+    //   options.map((option) => {
+    //     if (/^\d+$/.test(option)) {
+    //       array.push(parseInt(option));
+    //     } else {
+    //       return options;
+    //     }
+    //   });
+    //   return array;
+    // }
+
+    if (isValueAllNum) {
+      thisValue = parseInt(value);
+    }
+
+    console.log(options);
+    console.log({
+      item: {
+        ...this.state.item,
+        [id]: options[0] ? options : value === "on" ? true : value,
+      },
+    });
+    this.setState({
+      item: {
+        ...this.state.item,
+        [id]: options[0] ? options : value === "on" ? true : value,
+      },
+    });
+  }
+
   handleSubmit(event) {
     console.log(event);
+    console.log(this.state);
     event.preventDefault();
   }
 
@@ -48,7 +103,8 @@ class Edititem extends Component {
                 id="name"
                 placeholder="Name..."
                 type="text"
-                defaultValue={this.props.item ? this.props.item.name : null}
+                value={this.state.item.name || null}
+                onChange={this.handleChange}
               />
             </div>
             <div className="align-middle mb-2">
@@ -61,12 +117,13 @@ class Edititem extends Component {
               <div className="relative mb-4">
                 <select
                   className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                  id="ingredients"
+                  id="category"
+                  onChange={this.handleChange}
                 >
                   {getCategories().map((category) => {
                     if (
-                      this.props.item &&
-                      this.props.item.category.includes(category.id)
+                      this.state.item.category &&
+                      this.state.item.category.includes(category.id)
                     ) {
                       return (
                         <option
@@ -100,12 +157,14 @@ class Edititem extends Component {
                 <select
                   className="block form-multiselect appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                   id="ingredients"
+                  onChange={this.handleChange}
                   multiple
                 >
+                  {/* sort below list alphabetically first */}
                   {getIngredients().map((ingredient) => {
                     if (
-                      this.props.item &&
-                      this.props.item.ingredients.includes(ingredient.id)
+                      this.state.item.ingredients &&
+                      this.state.item.ingredients.includes(ingredient.id)
                     ) {
                       return (
                         <option
@@ -136,11 +195,8 @@ class Edititem extends Component {
                 id="description"
                 placeholder="Description..."
                 type="text"
-                defaultValue={
-                  this.props.item && this.props.item.description
-                    ? this.props.item.description
-                    : ""
-                }
+                value={this.state.item.description || ""}
+                onChange={this.handleChange}
               />
             </div>
             <div className="align-middle mb-4">
@@ -149,14 +205,11 @@ class Edititem extends Component {
               </label>
               <input
                 className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                id="name"
+                id="allergens"
                 placeholder="Allergens..."
                 type="text"
-                defaultValue={
-                  this.props.item && this.props.item.allergens
-                    ? this.props.item.allergens
-                    : ""
-                }
+                value={this.state.item.allergens || ""}
+                onChange={this.handleChange}
               />
             </div>
             <div className="align-middle mb-2">
@@ -168,12 +221,10 @@ class Edititem extends Component {
                   <label className="inline-flex items-center">
                     <input
                       type="checkbox"
+                      id="isUndercooked"
                       className="form-checkbox text-indigo-600"
-                      checked={
-                        this.props.item && this.props.item.isUndercooked
-                          ? true
-                          : null
-                      }
+                      checked={this.state.item.isUndercooked ? true : null}
+                      onChange={this.handleChange}
                     />
                     <span className="ml-2 text-sm">Raw/undercooked</span>
                   </label>
@@ -182,12 +233,10 @@ class Edititem extends Component {
                   <label className="inline-flex items-center">
                     <input
                       type="checkbox"
+                      id="vegetarian"
                       className="form-checkbox text-indigo-600"
-                      checked={
-                        this.props.item && this.props.item.vegetarian
-                          ? true
-                          : null
-                      }
+                      checked={this.state.item.vegetarian ? true : null}
+                      onChange={this.handleChange}
                     />
                     <span className="ml-2 text-sm">Vegetarian</span>
                   </label>
@@ -196,10 +245,10 @@ class Edititem extends Component {
                   <label className="inline-flex items-center">
                     <input
                       type="checkbox"
+                      id="vegan"
                       className="form-checkbox text-indigo-600"
-                      checked={
-                        this.props.item && this.props.item.vegan ? true : null
-                      }
+                      checked={this.state.item.vegan ? true : null}
+                      onChange={this.handleChange}
                     />
                     <span className="ml-2 text-sm">Vegan</span>
                   </label>
