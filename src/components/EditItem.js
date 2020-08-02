@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { observer } from "mobx-react";
 import { ReactComponent as EditIcon } from "../assets/icons/edit.svg";
 import {
   getItems,
@@ -6,6 +7,7 @@ import {
   getCategories,
 } from "../components/GetMenuData";
 
+@observer
 class Edititem extends Component {
   constructor(props) {
     super(props);

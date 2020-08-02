@@ -1,4 +1,5 @@
 import React from "react";
+import { observer } from "mobx-react";
 import {
   getCategories,
   getItems,
@@ -10,6 +11,7 @@ import { ReactComponent as LeafIcon } from "../assets/icons/leaf.svg";
 import { ReactComponent as SpicyIcon } from "../assets/icons/chili-pepper.svg";
 import { ReactComponent as ChevronUpIcon } from "../assets/icons/chevron-up.svg";
 
+@observer
 class Main extends React.Component {
   constructor(props) {
     super(props);
