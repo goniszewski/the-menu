@@ -3,12 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-proposal-decorators": "^7.10.5",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "autoprefixer": "^9.8.4",
+    "babel-plugin-import": "^1.13.0",
+    "babel-preset-react-native": "^4.0.1",
+    "customize-cra": "^1.0.0",
+    "mobx": "^5.15.4",
+    "mobx-react": "^6.2.5",
     "postcss-cli": "^7.1.1",
     "react": "^16.13.1",
+    "react-app-rewired": "^2.1.6",
     "react-beautiful-dnd": "^13.0.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
@@ -16,8 +23,8 @@
   },
   "scripts": {
     "build:css": "tailwind build src/tailwind.css -o src/style.css",
-    "start": "npm run build:css && react-scripts start",
-    "build": "react-scripts build",
+    "start": "yarn run build:css && react-app-rewired start",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -37,6 +44,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@fullhuman/postcss-purgecss": "^2.3.0",
     "tailwindcss": "^1.4.6"
   }

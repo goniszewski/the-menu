@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { observer } from "mobx-react";
 import { getItems, getIngredients } from "../components/GetMenuData";
 import EditItem from "./EditItem";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
@@ -33,6 +34,7 @@ const getListStyle = (isDraggingOver) => ({
   background: isDraggingOver ? "lightblue" : "lightgrey",
 });
 
+@observer
 export default class MenuItems extends Component {
   constructor(props) {
     super(props);
