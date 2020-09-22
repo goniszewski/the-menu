@@ -6,7 +6,7 @@ import {
   getCategories,
 } from "../components/GetMenuData";
 
-const Edititem = ({ item, newItem, hideNewItemModal }) => {
+const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
   const [state, setState] = useState({ isModalVisible: false, item: {} });
 
   useEffect(() => {

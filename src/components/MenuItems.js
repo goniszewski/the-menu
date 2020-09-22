@@ -35,6 +35,27 @@ const getListStyle = (isDraggingOver) => ({
 
 const MenuItems = ({ selectedCategory }) => {
   const [state, setState] = useState({ items: [], showNewItemModal: false });
+  const [editedItems, setEditedItems] = useState([
+    // {
+    //   "id": 1,
+    //   "category": [
+    //     1
+    //   ],
+    //   "name": "Margherita",
+    //   "price": 18,
+    //   "description": null,
+    //   "ingredients": [
+    //     1,
+    //     2
+    //   ],
+    //   "allergens": null,
+    //   "spiceLevel": 0,
+    //   "isUndercooked": false,
+    //   "vegetarian": true,
+    //   "vegan": false,
+    //   "comesWith": []
+    // }
+  ]);
 
   useEffect(() => {
     let itemsCopy = [...state.items];
@@ -62,9 +83,11 @@ const MenuItems = ({ selectedCategory }) => {
       result.destination.index
     );
 
-    setState({
-      items: thisItems,
-    });
+    setState({ ...state, items: thisItems });
+  };
+
+  const addItem = (item) => {
+    setState({ ...state, items: [...state.items, item] });
   };
 
   const hideNewItemModal = () => {
@@ -118,7 +141,13 @@ const MenuItems = ({ selectedCategory }) => {
                           </span>
 
                           <span className="inline-flex float-right">
-                            <EditItem item={item} />
+                            <EditItem
+                              item={item}
+                              newItem={false}
+                              addItem
+                              hideNewItemModal={false}
+                              setEditedItems={setEditedItems}
+                            />
                             <button
                               onClick={() =>
                                 console.info(
@@ -153,7 +182,12 @@ const MenuItems = ({ selectedCategory }) => {
             </button>
           </div>
           {state.showNewItemModal ? (
-            <EditItem newItem hideNewItemModal={hideNewItemModal} />
+            <EditItem
+              item={false}
+              newItem
+              addItem
+              hideNewItemModal={hideNewItemModal}
+            />
           ) : (
             <></>
           )}
