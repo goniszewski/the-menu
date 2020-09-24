@@ -3,15 +3,13 @@ export let newItems = [];
 export let newIngredients = [];
 
 export function setCategories(categories) {
-  this.setState({ categories: [...this.state.categories, categories] }); // not in class body
+  newCategories = categories;
 }
 
 export function setItems(items) {
-  const menuItems = items;
-  return menuItems;
+  newItems = items;
 }
 
 export function setIngredients(ingredients) {
-  const menuIngredients = ingredients;
-  return menuIngredients;
+  newItems = ingredients;
 }

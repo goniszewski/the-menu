@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { getItems, getIngredients } from "../components/GetMenuData";
+import {
+  setCategories,
+  setItems,
+  setIngredients,
+} from "../components/SetMenuData";
 import EditItem from "./EditItem";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { ReactComponent as SquaredCrossIcon } from "../assets/icons/squared-cross.svg";
@@ -184,8 +189,8 @@ const MenuItems = ({ selectedCategory }) => {
           {state.showNewItemModal ? (
             <EditItem
               item={false}
-              newItem
-              addItem
+              newItem={state.showNewItemModal}
+              addItem={addItem}
               hideNewItemModal={hideNewItemModal}
             />
           ) : (

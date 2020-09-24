@@ -10,19 +10,22 @@ const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
   const [state, setState] = useState({ isModalVisible: false, item: {} });
 
   useEffect(() => {
-    setState({ ...state, isModalVisible: true });
-  }, [newItem]);
+    if (newItem && !state.isModalVisible) {
+      setState({ ...state, isModalVisible: true });
+    }
+  }, [newItem, state]);
+
   useEffect(() => {
     if (item) {
       setState({ ...state, item: item });
     }
-  }, [item]);
+  }, []);
 
-  useEffect(() => {
-    if (newItem && !state.isModalVisible) {
-      hideNewItemModal();
-    }
-  });
+  // useEffect(() => {
+  //   if (!newItem && !state.isModalVisible) {
+  //     hideNewItemModal();
+  //   }
+  // }, [newItem, state]);
 
   const handleChange = (event) => {
     const target = event.target;
@@ -249,7 +252,7 @@ const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
             <button
               className="fill-current text-white self-center bg-orange-400 rounded hover:bg-orange-500 p-1 px-6 mt-4"
               role="submit"
-              onClick={() => console.log("hi")}
+              onClick={() => console.log(state)}
             >
               Update
             </button>
@@ -257,7 +260,10 @@ const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
         </form>
         <div
           className="z-10 absolute top-0 left-0 w-full h-full overflow-auto bg-black opacity-25 "
-          onClick={() => setState({ ...state, isModalVisible: false })}
+          onClick={() => {
+            setState({ ...state, isModalVisible: false });
+            hideNewItemModal();
+          }}
         ></div>
       </div>
     );
