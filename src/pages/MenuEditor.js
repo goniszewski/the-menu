@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useObserver } from "mobx-react-lite";
 import { getCategories } from "../components/GetMenuData";
 import { ReactComponent as CircleWithPlusIcon } from "../assets/icons/circle-with-plus.svg";
 import MenuItems from "../components/MenuItems";
+import { useMenuStore } from "../stores/MenuStore";
 
 const MenuEditor = () => {
   const [state, setState] = useState({ selectedCategory: getCategories()[0] });
@@ -10,7 +12,11 @@ const MenuEditor = () => {
     setState({ selectedCategory: getCategories()[0] });
   }, []);
 
-  return (
+  const menuStore = useMenuStore();
+  menuStore.addItem("test4");
+  console.log(menuStore.getItems);
+
+  return useObserver(() => (
     <div className="container z-0">
       <div className="flex flex-col">
         <header className="flex-row m-4">
@@ -61,7 +67,7 @@ const MenuEditor = () => {
         </main>
       </div>
     </div>
-  );
+  ));
 };
 
 export default MenuEditor;
