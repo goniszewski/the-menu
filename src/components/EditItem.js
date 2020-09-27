@@ -6,26 +6,20 @@ import {
   getCategories,
 } from "../components/GetMenuData";
 
-const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
+const Edititem = ({ item, addItem, hideNewItemModal }) => {
   const [state, setState] = useState({ isModalVisible: false, item: {} });
 
   useEffect(() => {
-    if (newItem && !state.isModalVisible) {
+    if (!item.id && !state.isModalVisible) {
       setState({ ...state, isModalVisible: true });
     }
-  }, [newItem, state]);
+  }, [item, state]);
 
   useEffect(() => {
     if (item) {
       setState({ ...state, item: item });
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (!newItem && !state.isModalVisible) {
-  //     hideNewItemModal();
-  //   }
-  // }, [newItem, state]);
 
   const handleChange = (event) => {
     const target = event.target;
@@ -262,7 +256,9 @@ const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
           className="z-10 absolute top-0 left-0 w-full h-full overflow-auto bg-black opacity-25 "
           onClick={() => {
             setState({ ...state, isModalVisible: false });
-            hideNewItemModal();
+            if (hideNewItemModal) {
+              hideNewItemModal();
+            }
           }}
         ></div>
       </div>
@@ -270,7 +266,7 @@ const Edititem = ({ item, newItem, addItem, hideNewItemModal }) => {
   }
   return (
     <>
-      {newItem ? (
+      {!item.id ? (
         <></>
       ) : (
         <button onClick={() => setState({ ...state, isModalVisible: true })}>

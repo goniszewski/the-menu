@@ -6,15 +6,17 @@ import MenuItems from "../components/MenuItems";
 import { useMenuStore } from "../stores/MenuStore";
 
 const MenuEditor = () => {
-  const [state, setState] = useState({ selectedCategory: getCategories()[0] });
+  const menuStore = useMenuStore();
+  const [state, setState] = useState({
+    selectedCategory: menuStore.getCategories[0],
+  });
 
   useEffect(() => {
-    setState({ selectedCategory: getCategories()[0] });
+    setState({ selectedCategory: menuStore.getCategories[0] });
   }, []);
 
-  const menuStore = useMenuStore();
   menuStore.addItem("test4");
-  console.log(menuStore.getItems);
+  console.log(menuStore.getCategories);
 
   return useObserver(() => (
     <div className="container z-0">

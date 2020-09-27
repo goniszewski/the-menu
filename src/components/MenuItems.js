@@ -7,6 +7,7 @@ import {
 } from "../components/SetMenuData";
 import EditItem from "./EditItem";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import { useMenuStore } from "../stores/MenuStore";
 import { ReactComponent as SquaredCrossIcon } from "../assets/icons/squared-cross.svg";
 import { ReactComponent as CircleWithPlusIcon } from "../assets/icons/circle-with-plus.svg";
 
@@ -61,12 +62,12 @@ const MenuItems = ({ selectedCategory }) => {
     //   "comesWith": []
     // }
   ]);
-
+  const menuStore = useMenuStore();
   useEffect(() => {
     let itemsCopy = [...state.items];
-    getItems().map((item) => {
+    menuStore.getItems.map((item) => {
       if (item.category.includes(selectedCategory.id)) {
-        console.log(item);
+        console.log(item.name);
         itemsCopy = [...itemsCopy, item];
       }
     });
@@ -189,7 +190,7 @@ const MenuItems = ({ selectedCategory }) => {
           {state.showNewItemModal ? (
             <EditItem
               item={false}
-              newItem={state.showNewItemModal}
+              // newItem={state.showNewItemModal}
               addItem={addItem}
               hideNewItemModal={hideNewItemModal}
             />

@@ -1,10 +1,37 @@
 import React from "react";
 import { useLocalStore } from "mobx-react-lite";
-import { data } from "autoprefixer";
+import {
+  getCategories,
+  getItems,
+  getIngredients,
+} from "../components/GetMenuData";
 
 export default function MenuStore() {
-  const data = { items: ["test1", "test2"], ingredients: [], categories: [] };
-  let newData = { items: ["test3"], ingredients: [], categories: [] };
+  const data = {
+    items: [...getItems()],
+    ingredients: [...getIngredients()],
+    categories: [...getCategories()],
+  };
+  let newData = {
+    items: [
+      {
+        id: 9,
+        category: [2],
+        name: "Burger wieprzowy xl",
+        price: 25,
+        description: null,
+        ingredients: [15, 16, 10, 11, 17, 12, 18],
+        allergens: null,
+        spiceLevel: 0,
+        isUndercooked: false,
+        vegetarian: false,
+        vegan: false,
+        comesWith: [],
+      },
+    ],
+    ingredients: [],
+    categories: [],
+  };
 
   const thisStore = {
     // get data (read-only)
@@ -29,7 +56,6 @@ export default function MenuStore() {
 export const useMenuStore = () => {
   const store = React.useContext(storeContext);
   if (!store) {
-    // this is especially useful in TypeScript so you don't need to be checking for null all the time
     throw new Error("useStore must be used within a StoreProvider.");
   }
   return store;
